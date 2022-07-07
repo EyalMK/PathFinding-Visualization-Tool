@@ -3,7 +3,7 @@
 This project is based on the A* path finding algorithm and its goal is to visualize it.
 
                                                     - The Algorithm -
-The A* algorithm has a start node and an end node. For each 'optimal' next node and its distance, we keep track of them
+The A* algorithm is based on nodes. A path has a start node and an end node. For each 'optimal' next node and its distance, we keep track of them
 with an open set (as a queue). The distance will be determined by the 'F' score [F(n) = G(n) + H(n)].
 H(n) - estimation of the distance from node n to the end node.
 G(n) - current shortest distance from start node to node n.
