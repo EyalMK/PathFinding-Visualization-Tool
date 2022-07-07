@@ -15,10 +15,11 @@ Yellow = (255, 255, 0)
 Grey = (128, 128, 128)
 
 class Node:
+    """
+    The class's methods involving colors and their purpose are commented above.
+    x,y - coordinates/indexing each position/node.
+    """
     def __init__(self, row, col, width, totalRows):
-        """
-        x/y - indexing each position/node with row/col.
-        """
         self.width = width
         self.row = row
         self.col = col
@@ -32,23 +33,18 @@ class Node:
         return self.row, self.col
 
     def isOpen(self):
-        # Denotes that the node belongs to the open set (to check as the potential shortest path).
         return self.type == Green
 
     def isClosed(self):
-        # Denotes that the node belongs to the closed set (already checked as the potential shortest path).
         return self.type == Red
 
     def isBarrier(self):
-        # Denotes a barrier
         return self.color == Black
 
     def isStart(self):
-        # Denotes the node as the start point.
         return self.color == Orange
 
     def isEnd(self):
-        # Denotes the node as the end point.
         return self.color == Turquoise
 
     def reset(self):
