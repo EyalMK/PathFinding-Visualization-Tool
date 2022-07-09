@@ -1,4 +1,4 @@
-import pygame
+import pygame.draw
 import math
 from queue import PriorityQueue
 
@@ -39,38 +39,52 @@ class Node:
         return self.type == Red
 
     def isBarrier(self):
-        return self.color == Black
+        return self.type == Black
 
     def isStart(self):
-        return self.color == Orange
+        return self.type == Orange
 
     def isEnd(self):
-        return self.color == Turquoise
+        return self.type == Turquoise
 
     def reset(self):
         # Reset path.
-        self.color = White
+        self.type = White
 
-    def makeClosed(self):
-        self.color = Red
+    def createStart(self):
+        self.type = Orange
 
-    def makeOpen(self):
-        self.color = Green
+    def createEnd(self):
+        self.type = Turquoise
 
-    def makeBarrier(self):
-        self.color = Black
+    def createClosed(self):
+        self.type = Red
 
-    def makeEnd(self):
-        self.color = Turquoise
+    def createOpen(self):
+        self.type = Green
 
-    def makePath(self):
-        self.color = Purple
+    def createBarrier(self):
+        self.type = Black
 
-    def draw(self, window):
-        pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.width))
+    def createPath(self):
+        self.type = Purple
+
+    def drawN(self, window):
+        pygame.draw.rect(window, self.type, (self.x, self.y, self.width, self.width))
 
     def updateNeighbors(self, grid):
-        pass
+        self.neighbors = []
+        if self.row < self.totalRows - 1 and not grid[self.row + 1][self.col].isBarrier(): # If the down neighbor isn't a barrier and isn't an edge of the grid
+            self.neighbors.append(grid[self.row + 1][self.col])
+
+        if self.row > 0 and not grid[self.row - 1][self.col].isBarrier(): # If the up neighbor isn't a barrier and isn't an edge of the grid
+            self.neighbors.append(grid[self.row - 1][self.col])
+
+        if self.col < self.totalRows - 1 and not grid[self.row][self.col + 1].isBarrier(): # If the right neighbor isn't a barrier and isn't an edge of the grid
+            self.neighbors.append(grid[self.row][self.col + 1])
+
+        if self.col > 0 and not grid[self.row][self.col - 1].isBarrier(): # If the left neighbor isn't a barrier and isn't an edge of the grid
+            self.neighbors.append(grid[self.row][self.col - 1])
 
     def __lt__(self, other):
         # Less than - compare F scores.
