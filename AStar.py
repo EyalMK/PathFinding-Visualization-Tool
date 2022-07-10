@@ -1,24 +1,16 @@
 import pygame.draw
-import math
-from queue import PriorityQueue
 
 # Colors
-Red = (255, 0, 0) # In the closed set - node that has been looked at.
-White = (255, 255, 255) # Node that hasn't been looked at.
-Black = (0, 0, 0) # Barrier - not a node to visit.
-Purple = (128, 0, 128) # Path
-Orange = (255, 165, 0) # Start node
-Turquoise = (64, 244, 208) # End node.
-Green = (0, 255, 0) # In the open set.
-Blue = (0, 0, 255)
-Yellow = (255, 255, 0)
-Grey = (128, 128, 128)
+White = (255, 255, 255) # Default grid color.
+Black = (0, 0, 0) # Barrier - a blocked node that can't be looked at.
+Brown = (139, 35, 35) # Path.
+Gold = (255, 215, 0) # Start node.
+Blue = (0, 0, 139) # End node
+Green = (0, 255, 0) # Denotes that a node is in the open set. Serves to draw the edge of a mini-grid containing the best path.
+Red = (255, 0, 0) # Closed set nodes. Nodes that have been considered and passed on.
+Grey = (128, 128, 105) # Default divider between each node.
 
 class Node:
-    """
-    The class's methods involving colors and their purpose are commented above.
-    x,y - coordinates/indexing each position/node.
-    """
     def __init__(self, row, col, width, totalRows):
         self.width = width
         self.row = row
@@ -32,30 +24,18 @@ class Node:
     def getPos(self):
         return self.row, self.col
 
-    def isOpen(self):
-        return self.type == Green
-
-    def isClosed(self):
-        return self.type == Red
-
     def isBarrier(self):
         return self.type == Black
-
-    def isStart(self):
-        return self.type == Orange
-
-    def isEnd(self):
-        return self.type == Turquoise
 
     def reset(self):
         # Reset path.
         self.type = White
 
     def createStart(self):
-        self.type = Orange
+        self.type = Gold
 
     def createEnd(self):
-        self.type = Turquoise
+        self.type = Blue
 
     def createClosed(self):
         self.type = Red
@@ -67,9 +47,9 @@ class Node:
         self.type = Black
 
     def createPath(self):
-        self.type = Purple
+        self.type = Brown
 
-    def drawN(self, window):
+    def drawNode(self, window):
         pygame.draw.rect(window, self.type, (self.x, self.y, self.width, self.width))
 
     def updateNeighbors(self, grid):
@@ -85,7 +65,3 @@ class Node:
 
         if self.col > 0 and not grid[self.row][self.col - 1].isBarrier(): # If the left neighbor isn't a barrier and isn't an edge of the grid
             self.neighbors.append(grid[self.row][self.col - 1])
-
-    def __lt__(self, other):
-        # Less than - compare F scores.
-        return False
