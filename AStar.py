@@ -1,4 +1,4 @@
-import pygame.draw
+import pygame
 
 # Colors
 White = (255, 255, 255) # Default grid color.
@@ -6,7 +6,7 @@ Black = (0, 0, 0) # Barrier - a blocked node that can't be looked at.
 Brown = (139, 35, 35) # Path.
 Gold = (255, 215, 0) # Start node.
 Blue = (0, 0, 139) # End node
-Green = (0, 255, 0) # Denotes that a node is in the open set. Serves to draw the edge of a mini-grid containing the best path.
+Green = (0, 128, 0) # Denotes that a node is in the open set. Serves to draw the edge of a mini-grid containing the best path.
 Red = (255, 0, 0) # Closed set nodes. Nodes that have been considered and passed on.
 Grey = (128, 128, 105) # Default divider between each node.
 
@@ -46,7 +46,7 @@ class Node:
     def createBarrier(self):
         self.type = Black
 
-    def createPath(self):
+    def createPath(self, window):
         self.type = Brown
 
     def drawNode(self, window):

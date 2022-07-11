@@ -1,8 +1,4 @@
 Goals during project:
-* Learn PriorityQueue and the data structure behind it & heap sort algorithm
-* Learn Breadth first search and depth first search and understand why A* is more efficient.
-* Revise Lambda
+* https://www.youtube.com/watch?v=HGOBQPFzWKo
 * Restructure to a project resembling a game.
-* Create pop up window for the algorithm return values (if return false, pop up window saying no path was found).
-* Create input text window to make the user choose width, height and amount of rows. Less than width // 2.
 * Redo colors.

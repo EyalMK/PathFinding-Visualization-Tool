@@ -17,6 +17,6 @@ The algorithm is finished.
 At this point we find the path and backtrack. End node with the lowest F score came from the previous node T, node T came from node S and so on and so forth.
 
                                                    - The Visualization -
-We will visualize the path finding with PyGame and the colour module.
+We will visualize the path finding with PyGame.
 We will use colors to denote the status of each node, comments can be found in AStar.py above the class declaration.
 It is best to find an alternative to colors, which will happen at later stages.
