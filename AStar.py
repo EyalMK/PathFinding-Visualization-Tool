@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 # Colors
 White = (255, 255, 255) # Default grid color.
@@ -20,6 +21,8 @@ class Node:
         self.y = col * width
         self.type = White
         self.neighbors = []
+        self.image = None
+        self.rec = None
 
     def getPos(self):
         return self.row, self.col
@@ -47,7 +50,10 @@ class Node:
         self.type = Black
 
     def createPath(self, window):
-        self.type = Brown
+        self.image = pygame.image.load("Assets/mario.png").convert() # Convert makes the blit faster.
+        self.image = pygame.transform.scale(self.image, (self.width, self.width))
+        self.rec = self.image.get_rect()
+        self.rec.topleft = (self.x, self.y)
 
     def drawNode(self, window):
         pygame.draw.rect(window, self.type, (self.x, self.y, self.width, self.width))

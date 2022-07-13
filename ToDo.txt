@@ -1,4 +1,0 @@
-Goals during project:
-* https://www.youtube.com/watch?v=HGOBQPFzWKo
-* Restructure to a project resembling a game.
-* Redo colors.

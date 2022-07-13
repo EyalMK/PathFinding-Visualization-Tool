@@ -3,7 +3,6 @@ import AStar
 import PyGameFunctions as PGF
 from queue import PriorityQueue
 
-
 def getPressedPos(pos, width, rows):
     """
         Gets the size of each node (rectangle), pos = (x,y) where mouse was pressed.
@@ -32,11 +31,15 @@ def getNodePos(grid, width, rows):
 def draw(window, grid, width, rows):
     """
         Draws every node in the grid (window) white. The default color.
+        If the node has an image (is part of the shortest path), it will blit the image instead.
     """
     window.fill(AStar.White)
     for row in grid:
         for node in row:
-            node.drawNode(window)
+            if node.image is not None and node.type != AStar.Gold: # If the node is part of the path and is not the start node.
+                window.blit(node.image, node.rec)
+            else:
+                node.drawNode(window)
 
     PGF.drawGrid(window, width, rows)  # Draw dividers.
     pygame.display.update()
@@ -72,6 +75,7 @@ def reconstructPath(window, prevNode, current, draw):
         Recreates the path by FScore in the open set. Draws every node's original source node (previous node)
         starting from the end node.
     """
+
     while current in prevNode:
         current = prevNode[current]
         current.createPath(window)
@@ -163,15 +167,19 @@ def eventController(window, grid, width, rows):
                     endNode = None
 
             if event.type == pygame.KEYDOWN:  # Start algorithm
-                startedAlgorithm = True
-                if event.key == pygame.K_SPACE and startedAlgorithm and startNode and endNode:
+                if event.key == pygame.K_SPACE and (startNode == None or endNode == None):
+                        PGF.PopUp('Please select a start node and an end node before starting the algorithm.')
+
+                elif event.key == pygame.K_SPACE and not startedAlgorithm and startNode and endNode:
+                    startedAlgorithm = True
                     for row in grid:
                         for node in row:
                             node.updateNeighbors(grid)
                     if not (algorithm(window, lambda: draw(window, grid, width, rows), grid, startNode,
                                       endNode)):  # If no path was found.
-                        PGF.PopUp()
+                        PGF.PopUp('No path was found.')
                     startedAlgorithm = False
+
 
                 if event.key == pygame.K_c:  # Reset window.
                     startedAlgorithm = False
@@ -183,7 +191,7 @@ def eventController(window, grid, width, rows):
 
 
 def main():
-    rows = 50
+    rows = 20
 
     window, width = PGF.createWindow()
     grid = createGrid(width, rows)

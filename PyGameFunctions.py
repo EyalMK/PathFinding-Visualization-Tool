@@ -1,5 +1,6 @@
 import pygame
 import AStar
+import sys
 
 class PopUpButton():
     def __init__(self, text, x = 0, y = 0, width = 100, height = 50):
@@ -46,7 +47,7 @@ def createWindow():
     """
         Creates a PyGame 800x800 window, gives it a title and returns the window with the width.
     """
-    width = 800
+    width = 500
     wind = pygame.display.set_mode((width, width))
     pygame.display.set_caption("A* Path Finding Visualization Tool")
     return wind, width
@@ -61,9 +62,9 @@ def drawGrid(window, width, rows):
     for j in range(rows):
         pygame.draw.line(window, AStar.Grey, (j * recSize, 0), (j * recSize, width))
 
-def PopUp():
-    width = 500
-    height = 250
+def PopUp(text):
+    width = 1000
+    height = 600
     maxFps = 60
 
     pygame.init()
@@ -72,7 +73,7 @@ def PopUp():
     pygame.display.set_caption("A* Path Finding Visualization Tool")
 
     font = pygame.font.Font('freesansbold.ttf', 25)
-    txtImg = font.render('No path was found.', True, AStar.Black)
+    txtImg = font.render(text, True, AStar.Black)
     txtRec = txtImg.get_rect()
     txtRec.center = (width // 2, height // 2)
 
@@ -80,7 +81,7 @@ def PopUp():
     clock = pygame.time.Clock()
     isRunning = True
 
-    bttn = PopUpButton('quit', 375, 200, 100, 40)
+    bttn = PopUpButton('quit', 800, 500, 100, 40)
 
     while isRunning:
         pygame.display.update()
@@ -104,5 +105,4 @@ def PopUp():
 
         bttn.update(window)
 
-    pygame.quit()
-    quit() # Quit the program. We've finished the algorithm.
+    sys.exit() # Stop the program and exit. We've finished the algorithm.
